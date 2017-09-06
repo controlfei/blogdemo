@@ -7,9 +7,11 @@ use Yii;
 /**
  * This is the model class for table "poststatus".
  *
- * @property string $id
+ * @property integer $id
  * @property string $name
  * @property integer $position
+ *
+ * @property Post[] $posts
  */
 class Poststatus extends \yii\db\ActiveRecord
 {
@@ -43,5 +45,13 @@ class Poststatus extends \yii\db\ActiveRecord
             'name' => 'Name',
             'position' => 'Position',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPosts()
+    {
+        return $this->hasMany(Post::className(), ['status' => 'id']);
     }
 }

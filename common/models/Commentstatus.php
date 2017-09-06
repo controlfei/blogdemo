@@ -10,6 +10,8 @@ use Yii;
  * @property integer $id
  * @property string $name
  * @property integer $position
+ *
+ * @property Comment[] $comments
  */
 class Commentstatus extends \yii\db\ActiveRecord
 {
@@ -27,6 +29,7 @@ class Commentstatus extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name', 'position'], 'required'],
             [['position'], 'integer'],
             [['name'], 'string', 'max' => 128],
         ];
@@ -42,5 +45,13 @@ class Commentstatus extends \yii\db\ActiveRecord
             'name' => 'Name',
             'position' => 'Position',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComments()
+    {
+        return $this->hasMany(Comment::className(), ['status' => 'id']);
     }
 }
